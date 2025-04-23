@@ -1,5 +1,9 @@
 # EventHub
 
+# RM556089 VINICIUS SOUZA CARVALHO
+# RM THOMAS RODRIGUES 
+# RM JOÃO VITOR CANDIDO 
+
 Sistema de Gestão de Eventos com arquitetura moderna e recursos avançados.
 
 ## Estrutura do Projeto
