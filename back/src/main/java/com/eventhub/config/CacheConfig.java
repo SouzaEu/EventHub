@@ -12,6 +12,12 @@ public class CacheConfig {
     
     @Bean
     public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("events");
+        ConcurrentMapCacheManager cacheManager = new ConcurrentMapCacheManager();
+        cacheManager.setCacheNames(java.util.Arrays.asList(
+            "events",
+            "users",
+            "categories"
+        ));
+        return cacheManager;
     }
 } 
