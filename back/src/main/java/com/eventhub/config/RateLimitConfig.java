@@ -28,11 +28,9 @@ public class RateLimitConfig {
     private Bucket newBucket(String key) {
         // 100 requisições por minuto
         Bandwidth limit = Bandwidth.simple(100, Duration.ofMinutes(1));
-        // Recarrega 100 tokens a cada minuto
-        Refill refill = Refill.intervally(100, Duration.ofMinutes(1));
+        
         return Bucket4j.builder()
                 .addLimit(limit)
-                .addLimit(refill)
                 .build();
     }
 } 

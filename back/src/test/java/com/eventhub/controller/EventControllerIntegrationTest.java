@@ -39,18 +39,17 @@ public class EventControllerIntegrationTest {
     @WithMockUser(roles = "ADMIN")
     void shouldCreateEvent() throws Exception {
         Event event = new Event();
-        event.setTitle("Test Event");
+        event.setName("Test Event");
         event.setDescription("Test Description");
         event.setDate(LocalDateTime.now().plusDays(1));
         event.setLocation("Test Location");
         event.setCapacity(100);
-        event.setPrice(50.0);
 
         mockMvc.perform(post("/api/events")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(event)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.title").value(event.getTitle()))
+                .andExpect(jsonPath("$.name").value(event.getName()))
                 .andExpect(jsonPath("$.description").value(event.getDescription()));
     }
 
@@ -58,17 +57,16 @@ public class EventControllerIntegrationTest {
     @WithMockUser(roles = "USER")
     void shouldGetAllEvents() throws Exception {
         Event event = new Event();
-        event.setTitle("Test Event");
+        event.setName("Test Event");
         event.setDescription("Test Description");
         event.setDate(LocalDateTime.now().plusDays(1));
         event.setLocation("Test Location");
         event.setCapacity(100);
-        event.setPrice(50.0);
         eventRepository.save(event);
 
         mockMvc.perform(get("/api/events"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value(event.getTitle()))
+                .andExpect(jsonPath("$[0].name").value(event.getName()))
                 .andExpect(jsonPath("$[0].description").value(event.getDescription()));
     }
 
@@ -76,22 +74,21 @@ public class EventControllerIntegrationTest {
     @WithMockUser(roles = "ADMIN")
     void shouldUpdateEvent() throws Exception {
         Event event = new Event();
-        event.setTitle("Test Event");
+        event.setName("Test Event");
         event.setDescription("Test Description");
         event.setDate(LocalDateTime.now().plusDays(1));
         event.setLocation("Test Location");
         event.setCapacity(100);
-        event.setPrice(50.0);
         event = eventRepository.save(event);
 
-        event.setTitle("Updated Event");
+        event.setName("Updated Event");
         event.setDescription("Updated Description");
 
         mockMvc.perform(put("/api/events/" + event.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(event)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Updated Event"))
+                .andExpect(jsonPath("$.name").value("Updated Event"))
                 .andExpect(jsonPath("$.description").value("Updated Description"));
     }
 
@@ -99,12 +96,11 @@ public class EventControllerIntegrationTest {
     @WithMockUser(roles = "ADMIN")
     void shouldDeleteEvent() throws Exception {
         Event event = new Event();
-        event.setTitle("Test Event");
+        event.setName("Test Event");
         event.setDescription("Test Description");
         event.setDate(LocalDateTime.now().plusDays(1));
         event.setLocation("Test Location");
         event.setCapacity(100);
-        event.setPrice(50.0);
         event = eventRepository.save(event);
 
         mockMvc.perform(delete("/api/events/" + event.getId()))
